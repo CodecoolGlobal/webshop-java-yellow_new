@@ -30,35 +30,113 @@
 
 <body>
 
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">CodecoolShop</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/cart}" th:text="'Cart '+ ${totalNumberOfItems} + ' items'" style="color:greenyellow"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/registration}" th:text="SignUp" style="color:greenyellow"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/login}" th:text="Login" style="color:greenyellow"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/logout}" th:text="Logout" style="color:greenyellow"></a>
+            </li>
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" href="#">Pricing</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
+<!--            </li>-->
+        </ul>
+    </div>
+</nav>
+
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
 </div>
 
+
+<!-- select one category-->
 <div class="container">
-    <div class="card">
-        <strong th:text="${category.name}">Category Title</strong>
-    </div>
+<!--    <div class="card">-->
+<!--        <h5>Categories</h5>-->
+<!--        <a href="index.html?category=1">Tablets</a>-->
+<!--        <a href="index.html?category=2">Smartwatches</a>-->
+
+<!--    <div class="card">-->
+<!--        <h5>Suppliers</h5>-->
+<!--        <a href="index.html?supplier=1">Amazon</a>-->
+<!--        <a href="index.html?supplier=2">Lenovo</a>-->
+<!--        <a href="index.html?supplier=3">Ebay</a>-->
+
+        <div class="btn-group">
+            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Categories
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="index.html?category=1">Tablets</a>
+                <a class="dropdown-item" href="index.html?category=2">Smartwatches</a>
+            </div>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-secondary btn-sm" type="button">
+                Suppliers
+            </button>
+            <button type="button" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="index.html?supplier=1">Amazon</a>
+                <a class="dropdown-item" href="index.html?supplier=2">Lenovo</a>
+                <a class="dropdown-item" href="index.html?supplier=3">Ebay</a>
+            </div>
+        </div>
+        <br>
+<!--    </div>-->
+<!--</div>-->
+<!--<br>-->
+<!--<br>-->
+
+<!--<div class="container-fluid">-->
+<!--        <div class="card">-->
+<!--            <strong th:text="${category.name}"></strong>-->
+<!--        </div>-->
+<!--        <br>-->
 
     <div id="products" class="row">
         <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
-            <div class="card">
-                <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+            <div class="card bg-light mb-3">
+                <img class="responsive" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/' + ${prod.image}" alt="" />
                 <div class="card-header">
-                    <h4 class="card-title" th:text="${prod.name}">Product name</h4>
-                    <p class="card-text" th:text="${prod.description}">Product description... </p>
+                    <h4 class="card-title" th:text="${prod.name}"></h4>
+                    <p class="card-text" th:text="${prod.description}"></p>
                 </div>
                 <div class="card-body">
                     <div class="card-text">
-                        <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                        <p class="lead" th:text="${prod.getPrice()}"></p>
                     </div>
                     <div class="card-text">
-                        <a class="btn btn-success" href="#">Add to cart</a>
+                        <form method="post"
+                            action="/cart">
+                            <input type="hidden" name="addToCart" th:value="${prod.getId()}">
+                            <input type="submit" class="btn btn-success" value="Add to cart">
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
 
 <div th:replace="footer.html :: copy"></div>
